@@ -1,0 +1,148 @@
+{
+  "lastUpdated": "2025-12-10T00:00:00.000Z",
+  "providers": {
+    "openai": {
+      "name": "OpenAI",
+      "models": [
+        {
+          "name": "GPT-4o",
+          "inputPrice": 2.50,
+          "outputPrice": 10.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "GPT-4o mini",
+          "inputPrice": 0.150,
+          "outputPrice": 0.600,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "GPT-4 Turbo",
+          "inputPrice": 10.00,
+          "outputPrice": 30.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "GPT-3.5 Turbo",
+          "inputPrice": 0.50,
+          "outputPrice": 1.50,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "o1-preview",
+          "inputPrice": 15.00,
+          "outputPrice": 60.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "o1-mini",
+          "inputPrice": 3.00,
+          "outputPrice": 12.00,
+          "unit": "per 1M tokens"
+        }
+      ]
+    },
+    "anthropic": {
+      "name": "Anthropic Claude",
+      "models": [
+        {
+          "name": "Claude Opus 4.5",
+          "inputPrice": 5.00,
+          "outputPrice": 25.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "Claude Sonnet 4.5",
+          "inputPrice": 3.00,
+          "outputPrice": 15.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "Claude Haiku 4.5",
+          "inputPrice": 1.00,
+          "outputPrice": 5.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "Claude Sonnet 4",
+          "inputPrice": 3.00,
+          "outputPrice": 15.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "Claude Haiku 3.5",
+          "inputPrice": 0.80,
+          "outputPrice": 4.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "Claude Haiku 3",
+          "inputPrice": 0.25,
+          "outputPrice": 1.25,
+          "unit": "per 1M tokens"
+        }
+      ]
+    },
+    "google": {
+      "name": "Google Gemini",
+      "models": [
+        {
+          "name": "Gemini 3 Pro Preview",
+          "inputPrice": 2.00,
+          "outputPrice": 12.00,
+          "unit": "per 1M tokens",
+          "notes": "≤200k tokens; $4/$18 for >200k"
+        },
+        {
+          "name": "Gemini 2.5 Pro",
+          "inputPrice": 1.25,
+          "outputPrice": 10.00,
+          "unit": "per 1M tokens",
+          "notes": "≤200k tokens; $2.50/$15 for >200k"
+        },
+        {
+          "name": "Gemini 2.5 Flash",
+          "inputPrice": 0.30,
+          "outputPrice": 2.50,
+          "unit": "per 1M tokens",
+          "notes": "text/image/video; $1 for audio input"
+        },
+        {
+          "name": "Gemini 2.5 Flash-Lite",
+          "inputPrice": 0.10,
+          "outputPrice": 0.40,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "Gemini 2.0 Flash",
+          "inputPrice": 0.10,
+          "outputPrice": 0.40,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "Gemini 2.0 Flash-Lite",
+          "inputPrice": 0.075,
+          "outputPrice": 0.30,
+          "unit": "per 1M tokens"
+        }
+      ]
+    },
+    "xai": {
+      "name": "xAI Grok",
+      "models": [
+        {
+          "name": "Grok Beta",
+          "inputPrice": 5.00,
+          "outputPrice": 15.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "Grok Vision Beta",
+          "inputPrice": 5.00,
+          "outputPrice": 15.00,
+          "unit": "per 1M tokens"
+        }
+      ]
+    }
+  }
+}

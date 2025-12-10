@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Model Pricing Comparison</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Model Pricing Comparison</h1>
+            <p class="subtitle">Real-time pricing across OpenAI, Claude, Gemini & Grok</p>
+            <p class="last-updated">Last updated: <span id="lastUpdated">Loading...</span></p>
+        </header>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>Sort by:</label>
+                <select id="sortBy">
+                    <option value="name">Model Name</option>
+                    <option value="inputPrice">Input Price (Low to High)</option>
+                    <option value="outputPrice">Output Price (Low to High)</option>
+                    <option value="provider">Provider</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Filter by provider:</label>
+                <div class="provider-filters">
+                    <label><input type="checkbox" class="provider-filter" value="openai" checked> OpenAI</label>
+                    <label><input type="checkbox" class="provider-filter" value="anthropic" checked> Claude</label>
+                    <label><input type="checkbox" class="provider-filter" value="google" checked> Gemini</label>
+                    <label><input type="checkbox" class="provider-filter" value="xai" checked> Grok</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label>Search:</label>
+                <input type="text" id="searchBox" placeholder="Search models...">
+            </div>
+        </div>
+
+        <div class="pricing-grid" id="pricingGrid">
+            <!-- Pricing cards will be inserted here by JavaScript -->
+        </div>
+
+        <footer>
+            <p>Data sourced from official provider documentation. Updated daily via GitHub Actions.</p>
+            <p class="disclaimer">Prices shown are per 1 million tokens unless otherwise noted. Always verify current pricing on provider websites.</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

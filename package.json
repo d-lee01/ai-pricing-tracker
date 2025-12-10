@@ -1,0 +1,16 @@
+{
+  "name": "ai-pricing-tracker",
+  "version": "1.0.0",
+  "description": "Daily updated AI model pricing comparison across OpenAI, Claude, Gemini, and Grok",
+  "main": "scraper.js",
+  "scripts": {
+    "scrape": "node scraper.js",
+    "dev": "npx serve ."
+  },
+  "keywords": ["ai", "pricing", "comparison", "openai", "claude", "gemini", "grok"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  }
+}
