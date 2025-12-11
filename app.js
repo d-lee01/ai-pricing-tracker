@@ -23,7 +23,7 @@ async function init() {
     } catch (error) {
         console.error('Error loading pricing data:', error);
         document.getElementById('pricingTableBody').innerHTML =
-            '<tr><td colspan="5" style="text-align: center; padding: 2rem;">Failed to load pricing data. Please try again later.</td></tr>';
+            '<tr><td colspan="6" style="text-align: center; padding: 2rem;">Failed to load pricing data. Please try again later.</td></tr>';
     }
 }
 
@@ -31,6 +31,7 @@ async function init() {
 function flattenPricingData(data) {
     const models = [];
 
+    // First pass: calculate average costs
     for (const [providerId, provider] of Object.entries(data.providers)) {
         for (const model of provider.models) {
             // Calculate average cost for 5k input tokens + 0.5k output tokens
@@ -50,6 +51,15 @@ function flattenPricingData(data) {
         }
     }
 
+    // Calculate median average cost for indexing
+    const sortedCosts = models.map(m => m.avgCost).sort((a, b) => a - b);
+    const medianCost = sortedCosts[Math.floor(sortedCosts.length / 2)];
+
+    // Second pass: add cost index (median = 100)
+    models.forEach(model => {
+        model.costIndex = (model.avgCost / medianCost) * 100;
+    });
+
     return models;
 }
 
@@ -58,19 +68,30 @@ function renderPricingTable(models) {
     const tbody = document.getElementById('pricingTableBody');
 
     if (models.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No models match your filters.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem;">No models match your filters.</td></tr>';
         return;
     }
 
-    tbody.innerHTML = models.map(model => `
+    tbody.innerHTML = models.map(model => {
+        // Color-code the index: green for cheap (<80), yellow for medium (80-120), red for expensive (>120)
+        let indexClass = 'index-medium';
+        if (model.costIndex < 80) {
+            indexClass = 'index-cheap';
+        } else if (model.costIndex > 120) {
+            indexClass = 'index-expensive';
+        }
+
+        return `
         <tr data-provider="${model.providerId}">
             <td><span class="provider-badge ${model.providerId}">${model.providerName}</span></td>
             <td class="model-name">${model.modelName}</td>
             <td><span class="price-value price-input">$${model.inputPrice.toFixed(2)}</span></td>
             <td><span class="price-value price-output">$${model.outputPrice.toFixed(2)}</span></td>
             <td><span class="price-value avg-cost">$${model.avgCost.toFixed(4)}</span></td>
+            <td><span class="cost-index ${indexClass}">${model.costIndex.toFixed(0)}</span></td>
         </tr>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Set up event listeners
@@ -163,6 +184,11 @@ function applyFilters() {
             case 'avgCost':
                 aVal = a.avgCost;
                 bVal = b.avgCost;
+                break;
+
+            case 'costIndex':
+                aVal = a.costIndex;
+                bVal = b.costIndex;
                 break;
 
             case 'provider':

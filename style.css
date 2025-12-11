@@ -221,6 +221,29 @@ h1 {
     font-weight: 700;
 }
 
+.cost-index {
+    font-weight: 700;
+    font-size: 1.125rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.index-cheap {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.index-medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.index-expensive {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
 footer {
     text-align: center;
     margin-top: 3rem;
