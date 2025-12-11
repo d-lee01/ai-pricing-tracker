@@ -16,16 +16,6 @@
 
         <div class="filters">
             <div class="filter-group">
-                <label>Sort by:</label>
-                <select id="sortBy">
-                    <option value="name">Model Name</option>
-                    <option value="inputPrice">Input Price (Low to High)</option>
-                    <option value="outputPrice">Output Price (Low to High)</option>
-                    <option value="provider">Provider</option>
-                </select>
-            </div>
-
-            <div class="filter-group">
                 <label>Filter by provider:</label>
                 <div class="provider-filters">
                     <label><input type="checkbox" class="provider-filter" value="openai" checked> OpenAI</label>
@@ -41,8 +31,21 @@
             </div>
         </div>
 
-        <div class="pricing-grid" id="pricingGrid">
-            <!-- Pricing cards will be inserted here by JavaScript -->
+        <div class="table-container">
+            <table class="pricing-table" id="pricingTable">
+                <thead>
+                    <tr>
+                        <th class="sortable" data-sort="provider">Provider</th>
+                        <th class="sortable" data-sort="name">Model Name</th>
+                        <th class="sortable active" data-sort="inputPrice">Input Price ▲</th>
+                        <th class="sortable" data-sort="outputPrice">Output Price</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="pricingTableBody">
+                    <!-- Table rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
         </div>
 
         <footer>

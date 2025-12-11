@@ -1,5 +1,6 @@
 let pricingData = null;
 let allModels = [];
+let currentSort = { column: 'inputPrice', ascending: true };
 
 // Initialize the app
 async function init() {
@@ -14,15 +15,15 @@ async function init() {
         // Transform data into flat array
         allModels = flattenPricingData(pricingData);
 
-        // Render pricing cards
-        renderPricingCards(allModels);
+        // Render pricing table (sorted by cheapest input price by default)
+        renderPricingTable(allModels);
 
         // Set up event listeners
         setupEventListeners();
     } catch (error) {
         console.error('Error loading pricing data:', error);
-        document.getElementById('pricingGrid').innerHTML =
-            '<div class="no-results">Failed to load pricing data. Please try again later.</div>';
+        document.getElementById('pricingTableBody').innerHTML =
+            '<tr><td colspan="5" style="text-align: center; padding: 2rem;">Failed to load pricing data. Please try again later.</td></tr>';
     }
 }
 
@@ -47,40 +48,45 @@ function flattenPricingData(data) {
     return models;
 }
 
-// Render pricing cards
-function renderPricingCards(models) {
-    const grid = document.getElementById('pricingGrid');
+// Render pricing table
+function renderPricingTable(models) {
+    const tbody = document.getElementById('pricingTableBody');
 
     if (models.length === 0) {
-        grid.innerHTML = '<div class="no-results">No models match your filters.</div>';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem;">No models match your filters.</td></tr>';
         return;
     }
 
-    grid.innerHTML = models.map(model => `
-        <div class="pricing-card ${model.providerId}" data-provider="${model.providerId}">
-            <span class="provider-badge ${model.providerId}">${model.providerName}</span>
-            <div class="model-name">${model.modelName}</div>
-            <div class="price-row">
-                <span class="price-label">Input</span>
-                <span class="price-value">$${model.inputPrice.toFixed(2)}</span>
-            </div>
-            <div class="price-row">
-                <span class="price-label">Output</span>
-                <span class="price-value">$${model.outputPrice.toFixed(2)}</span>
-            </div>
-            <div class="price-row">
-                <span class="price-label">Unit</span>
-                <span class="price-value" style="font-size: 0.875rem; color: var(--text-secondary);">${model.unit}</span>
-            </div>
-            ${model.notes ? `<div class="model-notes">${model.notes}</div>` : ''}
-        </div>
+    tbody.innerHTML = models.map(model => `
+        <tr data-provider="${model.providerId}">
+            <td><span class="provider-badge ${model.providerId}">${model.providerName}</span></td>
+            <td class="model-name">${model.modelName}</td>
+            <td><span class="price-value price-input">$${model.inputPrice.toFixed(2)}</span></td>
+            <td><span class="price-value price-output">$${model.outputPrice.toFixed(2)}</span></td>
+            <td class="model-notes">${model.notes || '—'}</td>
+        </tr>
     `).join('');
 }
 
 // Set up event listeners
 function setupEventListeners() {
-    // Sort functionality
-    document.getElementById('sortBy').addEventListener('change', applyFilters);
+    // Table header sorting
+    document.querySelectorAll('.sortable').forEach(header => {
+        header.addEventListener('click', () => {
+            const column = header.getAttribute('data-sort');
+
+            // Toggle sort direction if same column, otherwise default to ascending
+            if (currentSort.column === column) {
+                currentSort.ascending = !currentSort.ascending;
+            } else {
+                currentSort.column = column;
+                currentSort.ascending = true;
+            }
+
+            updateSortIndicators();
+            applyFilters();
+        });
+    });
 
     // Provider filters
     document.querySelectorAll('.provider-filter').forEach(checkbox => {
@@ -89,6 +95,23 @@ function setupEventListeners() {
 
     // Search functionality
     document.getElementById('searchBox').addEventListener('input', applyFilters);
+}
+
+// Update sort indicators on table headers
+function updateSortIndicators() {
+    document.querySelectorAll('.sortable').forEach(header => {
+        const column = header.getAttribute('data-sort');
+        header.classList.remove('active');
+
+        // Remove existing arrows
+        header.textContent = header.textContent.replace(/[▲▼]/g, '').trim();
+
+        if (column === currentSort.column) {
+            header.classList.add('active');
+            const arrow = currentSort.ascending ? ' ▲' : ' ▼';
+            header.textContent += arrow;
+        }
+    });
 }
 
 // Apply all filters and sorting
@@ -110,24 +133,44 @@ function applyFilters() {
         );
     }
 
-    // Sort
-    const sortBy = document.getElementById('sortBy').value;
+    // Sort by current sort column and direction
     filtered.sort((a, b) => {
-        switch (sortBy) {
+        let aVal, bVal;
+
+        switch (currentSort.column) {
             case 'name':
-                return a.modelName.localeCompare(b.modelName);
+                aVal = a.modelName.toLowerCase();
+                bVal = b.modelName.toLowerCase();
+                return currentSort.ascending
+                    ? aVal.localeCompare(bVal)
+                    : bVal.localeCompare(aVal);
+
             case 'inputPrice':
-                return a.inputPrice - b.inputPrice;
+                aVal = a.inputPrice;
+                bVal = b.inputPrice;
+                break;
+
             case 'outputPrice':
-                return a.outputPrice - b.outputPrice;
+                aVal = a.outputPrice;
+                bVal = b.outputPrice;
+                break;
+
             case 'provider':
-                return a.providerName.localeCompare(b.providerName);
+                aVal = a.providerName.toLowerCase();
+                bVal = b.providerName.toLowerCase();
+                return currentSort.ascending
+                    ? aVal.localeCompare(bVal)
+                    : bVal.localeCompare(aVal);
+
             default:
                 return 0;
         }
+
+        // For numeric values
+        return currentSort.ascending ? aVal - bVal : bVal - aVal;
     });
 
-    renderPricingCards(filtered);
+    renderPricingTable(filtered);
 }
 
 // Start the app when DOM is ready
