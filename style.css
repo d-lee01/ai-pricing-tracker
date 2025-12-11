@@ -216,10 +216,9 @@ h1 {
     color: #dc2626;
 }
 
-.model-notes {
-    font-size: 0.8125rem;
-    color: var(--text-secondary);
-    font-style: italic;
+.avg-cost {
+    color: var(--primary-color);
+    font-weight: 700;
 }
 
 footer {

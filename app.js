@@ -33,12 +33,17 @@ function flattenPricingData(data) {
 
     for (const [providerId, provider] of Object.entries(data.providers)) {
         for (const model of provider.models) {
+            // Calculate average cost for 5k input tokens + 0.5k output tokens
+            // 5000 tokens = 0.005M tokens, 500 tokens = 0.0005M tokens
+            const avgCost = (0.005 * model.inputPrice) + (0.0005 * model.outputPrice);
+
             models.push({
                 providerId,
                 providerName: provider.name,
                 modelName: model.name,
                 inputPrice: model.inputPrice,
                 outputPrice: model.outputPrice,
+                avgCost: avgCost,
                 unit: model.unit,
                 notes: model.notes || null
             });
@@ -63,7 +68,7 @@ function renderPricingTable(models) {
             <td class="model-name">${model.modelName}</td>
             <td><span class="price-value price-input">$${model.inputPrice.toFixed(2)}</span></td>
             <td><span class="price-value price-output">$${model.outputPrice.toFixed(2)}</span></td>
-            <td class="model-notes">${model.notes || '—'}</td>
+            <td><span class="price-value avg-cost">$${model.avgCost.toFixed(4)}</span></td>
         </tr>
     `).join('');
 }
@@ -153,6 +158,11 @@ function applyFilters() {
             case 'outputPrice':
                 aVal = a.outputPrice;
                 bVal = b.outputPrice;
+                break;
+
+            case 'avgCost':
+                aVal = a.avgCost;
+                bVal = b.avgCost;
                 break;
 
             case 'provider':
