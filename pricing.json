@@ -1,62 +1,79 @@
 {
-  "lastUpdated": "2025-12-10T00:00:00.000Z",
+  "lastUpdated": "2025-12-12T00:00:00.000Z",
   "providers": {
     "openai": {
       "name": "OpenAI",
       "models": [
         {
-          "name": "GPT-5",
+          "name": "gpt-5.2",
+          "inputPrice": 1.75,
+          "outputPrice": 14.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "gpt-5.1",
           "inputPrice": 1.25,
           "outputPrice": 10.00,
           "unit": "per 1M tokens"
         },
         {
-          "name": "GPT-5 mini",
+          "name": "gpt-5",
+          "inputPrice": 1.25,
+          "outputPrice": 10.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "gpt-5-mini",
           "inputPrice": 0.25,
           "outputPrice": 2.00,
           "unit": "per 1M tokens"
         },
         {
-          "name": "GPT-5 nano",
+          "name": "gpt-5-nano",
           "inputPrice": 0.05,
           "outputPrice": 0.40,
           "unit": "per 1M tokens"
         },
         {
-          "name": "GPT-4o",
+          "name": "gpt-5.2-pro",
+          "inputPrice": 21.00,
+          "outputPrice": 168.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "gpt-5-pro",
+          "inputPrice": 15.00,
+          "outputPrice": 120.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "gpt-4.1",
+          "inputPrice": 2.00,
+          "outputPrice": 8.00,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "gpt-4.1-mini",
+          "inputPrice": 0.40,
+          "outputPrice": 1.60,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "gpt-4.1-nano",
+          "inputPrice": 0.10,
+          "outputPrice": 0.40,
+          "unit": "per 1M tokens"
+        },
+        {
+          "name": "gpt-4o",
           "inputPrice": 2.50,
           "outputPrice": 10.00,
           "unit": "per 1M tokens"
         },
         {
-          "name": "GPT-4o mini",
-          "inputPrice": 0.150,
-          "outputPrice": 0.600,
-          "unit": "per 1M tokens"
-        },
-        {
-          "name": "GPT-4 Turbo",
-          "inputPrice": 10.00,
-          "outputPrice": 30.00,
-          "unit": "per 1M tokens"
-        },
-        {
-          "name": "o1-pro",
-          "inputPrice": 150.00,
-          "outputPrice": 600.00,
-          "unit": "per 1M tokens",
-          "notes": "Premium reasoning model for complex problems"
-        },
-        {
-          "name": "o1",
-          "inputPrice": 15.00,
-          "outputPrice": 60.00,
-          "unit": "per 1M tokens"
-        },
-        {
-          "name": "o4-mini",
-          "inputPrice": 1.10,
-          "outputPrice": 4.40,
+          "name": "gpt-4o-mini",
+          "inputPrice": 0.15,
+          "outputPrice": 0.60,
           "unit": "per 1M tokens"
         }
       ]
